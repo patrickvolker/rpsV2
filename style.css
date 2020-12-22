@@ -1,0 +1,11 @@
+.jumbtotron,
+h1 {
+  text-align: center;
+}
+.hide {
+  visibility: hidden;
+}
+
+.reveal {
+  visibility: visible;
+}
