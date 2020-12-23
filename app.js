@@ -18,7 +18,7 @@ let btnScissors = document.querySelector("#btnScissors");
 let btnPlayAgain = document.querySelector("#btnPlayAgain");
 let computerTitle = document.querySelector("#computerTitle");
 let computerIcon = document.querySelector("#computerIcon");
-let computerSelection = computerPlay();
+let computerSelection;
 let result = document.querySelector("#result");
 let scoreboard = document.getElementById("scoreboard");
 let userScoreboard = document.querySelector("#userScoreboard");
@@ -50,6 +50,7 @@ function computerPlay(){
         computerIcon.innerHTML = scissorsIcon;
     }
     console.log(computerThrow);
+    return computerThrow;
 }
 
 //user choice functions
@@ -61,7 +62,7 @@ function userPickedRock(){
     btnPlayAgain.classList.add('reveal');
     computerTitle.classList.remove('collapse');
     chooseYourFighter.innerHTML = "You chose rock!";
-    computerPlay();
+    computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
         scoreboard.innerHTML = "tie!";
@@ -84,7 +85,7 @@ function userPickedPaper(){
     btnPlayAgain.classList.add('reveal');
     computerTitle.classList.remove('collapse');
     chooseYourFighter.innerHTML = "You chose paper!";
-    computerPlay();
+    computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
         scoreboard.innerHTML = "you won!";
@@ -107,7 +108,7 @@ function userPickedScissors(){
     btnPlayAgain.classList.add('reveal');
     computerTitle.classList.remove('collapse');
     chooseYourFighter.innerHTML = "You chose scissors!";
-    computerPlay();
+    computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
         scoreboard.innerHTML = "you lost!";
