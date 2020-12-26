@@ -12,13 +12,14 @@ const errorIcon = `<i class="fas fa-times-circle fa-10x"></i>`;
 
 //bring in DOM elements
 let chooseYourFighter = document.querySelector("#chooseYourFighter");
+let playerIcon = document.getElementById("playerIcon");
 let btnRock = document.getElementById("btnRock");
 let btnPaper = document.querySelector("#btnPaper");
 let btnScissors = document.querySelector("#btnScissors");
 let btnPlayAgain = document.querySelector("#btnPlayAgain");
 let computerTitle = document.querySelector("#computerTitle");
 let computerIcon = document.querySelector("#computerIcon");
-let computerSelection = computerPlay();
+let computerSelection;
 let result = document.querySelector("#result");
 let scoreboard = document.getElementById("scoreboard");
 let userScoreboard = document.querySelector("#userScoreboard");
@@ -27,12 +28,27 @@ let userScore = 0;
 let computerScore = 0;
 
 const userWins = function(){
-    userScore++;
+    userScore + 1;
+    return userScore;
 };
 
 const computerWins = function(){
-    computerScore++;
+    computerScore + 1;
+    return computerScore;
 };
+
+//playAgain button function
+const resetGame = function(){
+    btnRock.classList.remove('collapse');
+    btnPaper.classList.remove('collapse');
+    btnScissors.classList.remove('collapse');
+    btnPlayAgain.classList.remove('reveal');
+    computerIcon.classList.add('collapse');
+    playerIcon.classList.add('collapse');
+    computerTitle.classList.add('collapse');
+    result.classList.add('hide');
+    chooseYourFighter.innerHTML = "CHOOSE YOUR FIGHTER";
+}
 
 //computer choice function
 function computerPlay(){
@@ -42,6 +58,8 @@ function computerPlay(){
         SCISSORS
         ];
     let computerThrow = computerChoices[Math.floor(Math.random()*computerChoices.length)];
+    computerIcon.classList.remove('collapse');
+    result.classList.remove('hide');
     if (computerThrow === ROCK) {
         computerIcon.innerHTML = rockIcon;
     } else if (computerThrow === PAPER) {
@@ -50,18 +68,20 @@ function computerPlay(){
         computerIcon.innerHTML = scissorsIcon;
     }
     console.log(computerThrow);
+    return computerThrow;
 }
 
 //user choice functions
 function userPickedRock(){
-    document.getElementById("playerIcon").innerHTML = rockIcon;
+    playerIcon.innerHTML = rockIcon;
+    playerIcon.classList.remove('collapse');
     btnRock.classList.add('collapse');
     btnPaper.classList.add('collapse');
     btnScissors.classList.add('collapse');
     btnPlayAgain.classList.add('reveal');
     computerTitle.classList.remove('collapse');
     chooseYourFighter.innerHTML = "You chose rock!";
-    computerPlay();
+    computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
         scoreboard.innerHTML = "tie!";
@@ -77,14 +97,15 @@ function userPickedRock(){
 }
 
 function userPickedPaper(){
-    document.getElementById("playerIcon").innerHTML = paperIcon;
+    playerIcon.innerHTML = paperIcon;
+    playerIcon.classList.remove('collapse');
     btnRock.classList.add('collapse');
     btnPaper.classList.add('collapse');
     btnScissors.classList.add('collapse');
     btnPlayAgain.classList.add('reveal');
     computerTitle.classList.remove('collapse');
     chooseYourFighter.innerHTML = "You chose paper!";
-    computerPlay();
+    computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
         scoreboard.innerHTML = "you won!";
@@ -100,14 +121,15 @@ function userPickedPaper(){
 }
 
 function userPickedScissors(){
-    document.getElementById("playerIcon").innerHTML = scissorsIcon;
+    playerIcon.innerHTML = scissorsIcon;
+    playerIcon.classList.remove('collapse');
     btnRock.classList.add('collapse');
     btnPaper.classList.add('collapse');
     btnScissors.classList.add('collapse');
     btnPlayAgain.classList.add('reveal');
     computerTitle.classList.remove('collapse');
     chooseYourFighter.innerHTML = "You chose scissors!";
-    computerPlay();
+    computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
         scoreboard.innerHTML = "you lost!";
@@ -118,23 +140,13 @@ function userPickedScissors(){
         userWins();
         userScoreboard.innerHTML = `${userScore}`;
     } else if (computerSelection === SCISSORS) {
-        scoreboard.innerHTML = "you tie!";
+        scoreboard.innerHTML = "tie!";
+        computerWins();
+        computerScoreboard.innerHTML = `${computerScore}`;
     }
 }
 
 btnRock.addEventListener('click', userPickedRock);
 btnPaper.addEventListener('click', userPickedPaper);
 btnScissors.addEventListener('click', userPickedScissors);
-// btnPlayAgain.addEventListener('click', userPickedRock)
-
-//game function
-
-//computer logic engine (lol)
-// function computerPlay(){
-//     const computerChoices = [
-//         ROCK,
-//         PAPER,
-//         SCISSORS
-//         ];
-//     return computerChoices[Math.floor(Math.random()*computerChoices.length)];
-// }
+btnPlayAgain.addEventListener('click', resetGame);
