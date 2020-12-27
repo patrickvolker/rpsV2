@@ -9,7 +9,6 @@ const paperIcon = `<i class="far fa-hand-paper fa-10x"></i>`;
 const scissorsIcon = `<i class="far fa-hand-scissors fa-10x"></i>`;
 const errorIcon = `<i class="fas fa-times-circle fa-10x"></i>`;
 
-
 //bring in DOM elements
 let chooseYourFighter = document.querySelector("#chooseYourFighter");
 let playerIcon = document.getElementById("playerIcon");
@@ -22,18 +21,27 @@ let computerIcon = document.querySelector("#computerIcon");
 let computerSelection;
 let result = document.querySelector("#result");
 let scoreboard = document.getElementById("scoreboard");
-let userScoreboard = document.querySelector("#userScoreboard");
-let computerScoreboard = document.querySelector("#computerScoreboard");
+let userScoreboard = document.getElementById("userScoreboard");
+let computerScoreboard = document.getElementById("computerScoreboard");
 let userScore = 0;
 let computerScore = 0;
 
-const userWins = function(){
-    userScore + 1;
+const declareWinner = function(){
+    if (userScore > computerScore) {
+        alert("You beat the computer!", window.location.reload());
+    } else {
+        alert('The computer beat you! Try again?', window.location.reload());
+    }
+};
+
+
+const userWins = function() {
+    userScore++;
     return userScore;
 };
 
-const computerWins = function(){
-    computerScore + 1;
+const computerWins = function() {
+    computerScore++;
     return computerScore;
 };
 
@@ -84,15 +92,18 @@ function userPickedRock(){
     computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
-        scoreboard.innerHTML = "tie!";
+        result.innerHTML = "tie!";
     } else if (computerSelection === PAPER) {
-        scoreboard.innerHTML = "you lost!";
+        result.innerHTML = "you lost!";
         computerWins();
         computerScoreboard.innerHTML = `${computerScore}`;
     } else if (computerSelection === SCISSORS) {
-        scoreboard.innerHTML = "you won!";
+        result.innerHTML = "you won!";
         userWins();
-        userScoreboard.innerHTML = `${userScore}`;
+        userScoreboard.innerHTML = userScore;
+    }
+    if (userScore === 5 || computerScore === 5) {
+        declareWinner();
     }
 }
 
@@ -108,15 +119,18 @@ function userPickedPaper(){
     computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
-        scoreboard.innerHTML = "you won!";
+        result.innerHTML = "you won!";
         userWins();
         userScoreboard.innerHTML = `${userScore}`;
     } else if (computerSelection === PAPER) {
-        scoreboard.innerHTML = "you tie!";
+        result.innerHTML = "you tie!";
     } else if (computerSelection === SCISSORS) {
-        scoreboard.innerHTML = "you lost!";
+        result.innerHTML = "you lost!";
         computerWins();
         computerScoreboard.innerHTML = `${computerScore}`;
+    }
+    if (userScore === 5 || computerScore === 5) {
+        declareWinner();
     }
 }
 
@@ -132,17 +146,18 @@ function userPickedScissors(){
     computerSelection = computerPlay();
     result.classList.remove('collapse');
     if (computerSelection === ROCK) {
-        scoreboard.innerHTML = "you lost!";
+        result.innerHTML = "you lost!";
         computerWins();
         computerScoreboard.innerHTML = `${computerScore}`;
     } else if (computerSelection === PAPER) {
-        scoreboard.innerHTML = "you won!";
+        result.innerHTML = "you won!";
         userWins();
         userScoreboard.innerHTML = `${userScore}`;
     } else if (computerSelection === SCISSORS) {
-        scoreboard.innerHTML = "tie!";
-        computerWins();
-        computerScoreboard.innerHTML = `${computerScore}`;
+        result.innerHTML = "tie!";
+    }
+    if (userScore === 5 || computerScore === 5) {
+        declareWinner();
     }
 }
 
